@@ -27,11 +27,6 @@ const routes = [
     name: 'Meus envios',
     component: () => import(/* webpackChunkName: "perfil" */ '../views/Envios.vue')
   },
-  {
-    path: '/recebidos',
-    name: 'Recebidos',
-    component: () => import(/* webpackChunkName: "perfil" */ '../views/Recebidos.vue')
-  }
 
 ]
 

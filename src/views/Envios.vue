@@ -1,34 +1,63 @@
 <template>
-  <div class="envio">
-    <h1>Meus envios</h1>
+  <div class="view">
+    <div class="header">
+      <h2>Meus envios</h2>
+    </div>
     <div class="msg-container msg-container-styck">
       <transition>
         <p v-show="msg.error" class="msg msg-styck">{{ msg.mensagem }}</p>
       </transition>
     </div>
-    <div v-if="render.error == false">
-      <p>{{render.mensagem}}</p>
+    <div v-if="render.error == false" class="warning">
+      <div>
+        <p>{{render.mensagem}}</p>
+      </div>
     </div>
     <div v-else>
-      <h2>Vagas</h2>
-      <div class="lista-vaga" v-show="vagas != null">
-        <div v-for="vaga in vagas" :key="vaga.id_vaga" class="row-vaga">
-          <p>Empresa: {{vaga.nome}}</p>
-
-          <p>Email: {{vaga.email}}</p>
-          <p>Telefone: {{vaga.phone}}</p>
-
-          <p>Logradouro: {{vaga.logradouro}}</p>
-          <p>Complemento: {{vaga.complemento}}</p>
-          <p>Bairro: {{vaga.bairro}}</p>
-          <p>Cidade: {{vaga.cidade}}</p>
-          <p>Estado: {{vaga.estado}}</p>
-
-          <p>Área: {{vaga.area}}</p>
-          <p>Vaga: {{vaga.vaga}}</p>
-          <p>Salário: {{vaga.salario}}</p>
-          <p>Descrição: {{vaga.descricao}}</p>
-          <p>Requisitos: {{vaga.requisitos}}</p>
+      <div class="container" v-show="vagas != null">
+        <div v-for="vaga in vagas" :key="vaga.id_vaga" class="field">
+          <div class="header sub-header">
+            <h2>Vaga</h2>
+          </div>
+          <div class="flex">
+            <div class="flex-1">
+              <h3>Sobre a empresa</h3>
+              <div class="text">
+                <p>Empresa: <i>{{vaga.nome}}</i></p>
+                <p>Email: <i>{{vaga.email}}</i></p>
+                <p>Telefone: <i>{{vaga.phone}}</i></p>
+              </div>
+            </div>
+            <div class="flex-2">
+              <h3>Endereço</h3>
+              <div class="text">
+                <div>
+                  <p>Logradouro: <i>{{vaga.logradouro}}</i></p>
+                  <p>Complemento: <i>{{vaga.complemento}}</i></p>
+                  <p>Bairro: <i>{{vaga.bairro}}</i></p>
+                </div>
+                <div>
+                  <p>Cidade: <i>{{vaga.cidade}}</i></p>
+                  <p>Estado: <i>{{vaga.estado}}</i></p>
+                </div>
+              </div>
+            </div>
+            <div class="flex-3">
+              <h3>Sobre a vaga</h3>
+              <div>
+                <div class="text">
+                  <p>Área: <i>{{vaga.area}}</i></p>
+                  <p>Vaga: <i>{{vaga.vaga}}</i></p>
+                  <p>Salário: <i>{{vaga.salario}}</i></p>
+                </div> 
+                <h3 class="flex3">Descrição</h3>
+                <p>{{vaga.descricao}}</p>
+                <h3 class="flex3">Requisitos</h3>
+                <p>{{vaga.requisitos}}</p>
+              </div> 
+            </div> 
+          </div>
+       
           <button type="button" class="btn" @click="deleteEnvio(vaga.id_vaga)">Cancelar envio</button>
         </div> 
       </div>
@@ -114,24 +143,112 @@ export default {
 </script>
 
 <style scoped>
-.envio {
-  padding: 10px;
+.view {
+  height: auto;
+}
+
+.container {
+  color: #303133;
+  margin-left: 15px;
+  margin-top: 15px;
+  flex-direction: column;
+  padding-right: 15px;
+}
+
+.container .field{
+  margin-bottom: 15px;
   width: 100%;
 }
 
-
-
-.lista-vaga{
+.container .field .flex{
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  gap: 15px;
+  padding-top: 5px;
 }
 
-.row-vaga {
-  background-color: #4a4b4f;
-  padding: 10px;
+.container .field .flex > div{
+  padding-left: 10px;
+}
+
+.container .field .flex .text{
+  display: flex;
+  justify-content: space-evenly ;
+  height: auto;
+}
+
+.container .field .flex div h3{
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-bottom: 3px solid #303133;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.container .field .flex div .flex3 {
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.container .field .flex div p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  color: #303133;
+  font-size: 18px;  
+}
+
+.container .field .flex div p i {
+  color: #4a4b4f;
+}
+
+.container .field .btn {
+  margin-top: 15px;
+}
+
+.warning {
+  width: 100%;
+  height: 80vh;
+}
+
+.sub-header {
   margin-bottom: 10px;
 }
 
-.row-vaga p {
-  color: #dfe2ed;
+.sub-header h2 {
+  font-size: 28px;
+  text-align: left;
+  margin-left: 0;
+}
+
+.msg-styck {
+  top: 50px;
+}
+
+/*** MEDIA QUERIES ***/
+@media screen and (max-width: 800px) {
+  .view {
+    height: auto;
+  }
+
+  .container .field .flex {
+    display: block;
+  }
+
+  .container .field .flex div{
+    width: 100%;  
+  }
+
+  .container .field .flex div p {
+    margin-bottom: 5px;
+  }
+
+  .container .field .flex .text{
+    display: block;
+  }
+
+  .warning {
+    height: 85vh;
+  }
 }
 </style>

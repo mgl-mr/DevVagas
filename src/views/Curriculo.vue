@@ -1,41 +1,50 @@
 <template>
-  <div class="curriculo">
-    <div v-if="endereco == false">
-      <p>Você ainda não cadastrou seu endereço</p>
-      <p>Vá para perfil e cadestre-o</p>
+  <div class="view">
+    <div v-if="endereco == false" class="warning">
+      <div class="header">
+        <h2>AVISO</h2>
+      </div>
+      <div>
+        <p>Você ainda não cadastrou seu endereço.</p>
+        <p>Vá para perfil e cadestre-o!</p>
+      </div>
     </div>
     <div v-else>
-      <h1>Meu curriculo</h1>
-      <DevData :user="userData"/>
+      <div class="header">
+        <h2>Meu curriculo</h2>
+      </div>
+      <div class="container">
+        <DevData :user="userData"/>
 
-      <div class="cad-container">
-        <div class="container-input">
-          <label for="formação">Formação</label>
-          <textarea class="input" name="formação" v-model="curriculo.formacao" placeholder="Descreva sua formação acadêmica"></textarea>
-        </div>
+        <div class="field">
+          <div class="container-input">
+            <label for="formação">Formação</label>
+            <textarea class="input" name="formação" v-model="curriculo.formacao" placeholder="Descreva sua formação acadêmica"></textarea>
+          </div>
 
-        <div class="container-input">
-          <label for="experiência">Experiência</label>
-          <textarea class="input" name="experiência"  v-model="curriculo.experiencia" placeholder="Descreva sua experiência de trabalho"></textarea>
-        </div>
+          <div class="container-input">
+            <label for="experiência">Experiência</label>
+            <textarea class="input" name="experiência"  v-model="curriculo.experiencia" placeholder="Descreva sua experiência de trabalho"></textarea>
+          </div>
 
-        <div class="container-input">
-          <label for="idiomas">Idiomas</label>
-          <input type="text" class="input" name="idiomas" v-model="curriculo.idiomas" placeholder="Informe quais linguas você é fluente">
-        </div>
+          <div class="container-input">
+            <label for="idiomas">Idiomas</label>
+            <input type="text" class="input" name="idiomas" v-model="curriculo.idiomas" placeholder="Informe quais linguas você é fluente">
+          </div>
 
-        <div class="container-input">
-          <label for="github">GitHub</label>
-          <input type="text" class="input" name="github" v-model="curriculo.github" placeholder="Link do seu GitHub">
-        </div>
+          <div class="container-input">
+            <label for="github">GitHub</label>
+            <input type="text" class="input" name="github" v-model="curriculo.github" placeholder="Link do seu GitHub">
+          </div>
 
-        <div class="msg-container">
-          <transition>
-            <p v-show="msg.error" class="msg">{{ msg.mensagem }}</p>
-          </transition>
-        </div>
-        <button type="button" class="btn" @click="updateCurriculo">Atualizar dados</button>
-      </div> 
+          <div class="msg-container">
+            <transition>
+              <p v-show="msg.error" class="msg">{{ msg.mensagem }}</p>
+            </transition>
+          </div>
+          <button type="button" class="btn" @click="updateCurriculo">Atualizar dados</button>
+        </div> 
+      </div>
     </div>
   </div>
     
@@ -155,12 +164,45 @@ export default {
 </script>
 
 <style>
-.curriculo {
-  width: 100%;
-  background-color: #DFE2ED;
-  padding: 10px;
-  margin: 0 auto;
+.view {
+  height: 96vh;
 }
 
+.container {
+  color: #303133;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.field {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  width: 60%;
+}
+
+.btn:hover{
+  background-color: #4a4b4f;
+  color: #9af995;
+}
+
+.msg{
+  top: -15px;
+}
+
+@media screen and (max-width: 800px) {
+  .view {
+    height: auto;
+  }
+
+  .container {
+    display: block;
+    gap: 300px;
+    padding-right: 15px;
+  }
+
+  .field {    
+    width: 100%;
+  }
+}
 </style>
 

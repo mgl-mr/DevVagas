@@ -1,63 +1,20 @@
 <template>
-  <div class="vagas">
-    <div class="msg-container msg-container-styck">
+  <div class="view">
+    <div class="msg-container">
       <transition>
         <p v-show="msg.error" class="msg msg-styck">{{ msg.mensagem }}</p>
       </transition>
     </div>
-    <h2>Vagas cadastradas</h2>
-    
-    <p v-if="vagas == true">Não há vagas cadastradas</p>
-    <div v-else class="lista-vaga">
-      <div v-for="vaga in vagas" :key="vaga.id" class="row-vaga">
 
-        <div class="container-input">
-          <label for="area">Área de atuação</label>
-          <select name="area" id="area" v-model="vaga.area" class="input">
-            <option value="" disabled>Selecione á área</option>
-            <option value="Desenvolvedor Front-End">Desenvolvedor Front-End</option>
-            <option value="Desenvolvedor Back-End">Desenvolvedor Back-End</option>
-            <option value="Desenvolvedor Full-stack">Desenvolvedor Full-stack</option>
-            <option value="Desenvolvedor mobile">Desenvolvedor mobile</option>
-            <option value="Cientista de dados">Cientista de dados</option>
-            <option value="Técnico de segurança">Técnico de segurança</option>
-          </select>
-        </div>
-        
-        <div class="container-input">
-          <label for="vaga">Tipo da vaga</label>
-          <input type="radio" id="efetivado" name="vaga" value="efetivado" v-model="vaga.vaga">
-          <label for="efetivado">Efetivado</label>
-          <input type="radio" id="freelance" name="vaga" value="freelance" v-model="vaga.vaga">
-          <label for="freelance">Freelance</label>
-        </div>
-
-        <div class="container-input">
-          <label for="descrição">Descrição da vaga</label>
-          <textarea class="input" name="descrição"  v-model="vaga.descricao" placeholder="De algumas informações da vaga"></textarea>
-        </div>
-
-        <div class="container-input">
-          <label for="requisitos">Requisitos da vaga</label>
-          <textarea class="input" name="requisitos"  v-model="vaga.requisitos" placeholder="Liste os requisitos da vaga"></textarea>
-        </div>
-
-        <div class="container-input">
-          <label for="salario">Salario</label>
-          <input type="text" class="input" name="salario" v-model="vaga.salario" placeholder="Informe o salário">
-        </div>
-        <button type="button" class="btn" @click="updateVaga(vaga)">Alterar vaga</button>
-        <button type="button" class="btn" @click="deleteVaga(vaga.id)">Deletar vaga</button>
-        <button type="button" class="btn" @click="mostraCurriculo(vaga.id)">Curriculos enviados</button>
-      </div>
-    </div> 
-    <div class="list-styck" v-show="show">
-      <div class="header">
-      <h1>Curriculos</h1>
-        <button type="button" @click="fechaCurriculo">X</button>
+    <div class="curriculos" v-if="show">
+      <div class="header sub-header">
+        <h1>Curriculos</h1>
+        <button type="button" class="bt" @click="fechaCurriculo">
+          <i class="fa-solid fa-x"></i>
+        </button>
       </div>
       <div v-if="render.error == false">
-        <p>{{render.mensagem}}</p>
+        <p class="empty">{{render.mensagem}}</p>
       </div>
       <div v-else class="lista-vaga">
         <div v-for="curriculo in curriculos" :key="curriculo.id" class="row-vaga">
@@ -73,7 +30,59 @@
           <p>Experiência: {{curriculo.experiencia}}</p>
         </div>
       </div>
-  </div>
+    </div>
+
+    <div v-else>
+      <div class="header sub-header">
+        <h2>Vagas cadastradas</h2>
+      </div>
+      <p v-if="vagas == true">Não há vagas cadastradas</p>
+      <div v-else class="container">
+        <div v-for="vaga in vagas" :key="vaga.id" class="field">
+
+          <div class="container-input">
+            <label for="area">Área de atuação</label>
+            <select name="area" id="area" v-model="vaga.area" class="input">
+              <option value="" disabled>Selecione á área</option>
+              <option value="Desenvolvedor Front-End">Desenvolvedor Front-End</option>
+              <option value="Desenvolvedor Back-End">Desenvolvedor Back-End</option>
+              <option value="Desenvolvedor Full-stack">Desenvolvedor Full-stack</option>
+              <option value="Desenvolvedor mobile">Desenvolvedor mobile</option>
+              <option value="Cientista de dados">Cientista de dados</option>
+              <option value="Técnico de segurança">Técnico de segurança</option>
+            </select>
+          </div>
+          
+          <div class="container-input">
+            <label for="vaga">Tipo da vaga</label>
+            <input type="radio" id="efetivado" name="vaga" value="efetivado" v-model="vaga.vaga">
+            <label for="efetivado">Efetivado</label>
+            <input type="radio" id="freelance" name="vaga" value="freelance" v-model="vaga.vaga">
+            <label for="freelance">Freelance</label>
+          </div>
+
+          <div class="container-input">
+            <label for="descrição">Descrição da vaga</label>
+            <textarea class="input" name="descrição"  v-model="vaga.descricao" placeholder="De algumas informações da vaga"></textarea>
+          </div>
+
+          <div class="container-input">
+            <label for="requisitos">Requisitos da vaga</label>
+            <textarea class="input" name="requisitos"  v-model="vaga.requisitos" placeholder="Liste os requisitos da vaga"></textarea>
+          </div>
+
+          <div class="container-input">
+            <label for="salario">Salario</label>
+            <input type="text" class="input" name="salario" v-model="vaga.salario" placeholder="Informe o salário">
+          </div>
+          <div class="botoes">
+            <button type="button" class="btn" @click="updateVaga(vaga)">Alterar vaga</button>
+            <button type="button" class="btn" @click="deleteVaga(vaga.id)">Deletar vaga</button>
+            <button type="button" class="btn" @click="mostraCurriculo(vaga.id)">Curriculos</button>
+          </div>
+        </div>
+      </div> 
+    </div>
   </div>
 </template>
 
@@ -153,6 +162,9 @@ export default {
               this.vagas.splice(i, 1);
             }
           }
+          if(this.vagas == "") {
+            this.vagas = true;
+          }
         }
       });
       setTimeout(() => {
@@ -170,7 +182,7 @@ export default {
       })
       .then((resp) => resp.json())
       .then((data) => { 
-        if(data.error) {
+        if(data.error) { 
           this.render.error = false;
           this.render.mensagem = data.message;
         } else {
@@ -200,24 +212,95 @@ export default {
 </script>
 
 <style scoped>
-.row-vaga {
-  background-color: #4a4b4f;
-  padding: 10px;
+.view {
+  margin: 0;
+  width: 100%;
+}
+
+.container {
+  flex-wrap: wrap;
+  color: #303133;
+  margin-left: 2%;
+  margin-top: 15px;
+}
+
+.field {
+  width: 47%;
+  margin-right: 2%;
+  margin-bottom: 15px;
+}
+
+.botoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn{
+  width: 30%;
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+.view > p {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 50px;
+  padding-top: 12px;
+}
+
+.msg-styck {
+  top: 50px;
+}
+
+/*** LITAS FIXA CURRICULOS */
+.curriculos {
+
+}
+
+.curriculos .header {
+  position: relative;
+}
+
+.curriculos .bt {
+  position: absolute;
+  left: 10px;
+  top: 24px;
+  border: none;
+  background-color: transparent;
+  font-size: 28px;
+}
+
+.curriculos .bt:hover{
+  cursor: pointer;
+  color: #9af995;
+}
+
+.empty {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  color: #4a4b4f;
+  font-size: 18px;
   margin-bottom: 10px;
-  
+  border-bottom: 2px solid #dfe2ed;
+  padding-bottom: 3px;
+  text-align: center;
 }
 
-.row-vaga label {
-  color: #dfe2ed;
-  
-}
+@media screen and (max-width: 800px) {
+  .container {
+    display: block; 
+    padding-right: 15px;
+  }
 
-.list-styck {
-  position: fixed;
-  top: 20px;
-  width: 100%; 
-  background-color: #4a4b4f;
-  color: #DFE2ED;
-  padding: 10px;
+  .field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .header h2 {
+    font-size: 24px;
+  }
+
 }
 </style>

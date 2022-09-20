@@ -1,73 +1,80 @@
 <template>
-  <div class="container">
-    <section class="field">
-      <div>
-        <img :src="local" alt="logo Dev Vagas" id="logo" />
-      </div>
-      <div class="inputs">
-        <div class="container-input">
-          <label for="nome">Nome</label>
-          <input type="text" class="input" name="nome" v-model="user.nome">
+  <div class="view">
+    <div class="header">
+      <h2>Perfil</h2>
+    </div>
+    <div class="container">
+      <div class="field">
+        <div class="container-img">
+          <img :src="local" alt="logo Dev Vagas" id="logo" />
         </div>
-
-        <div class="container-input">
-          <label for="email">Email</label>
-          <input type="text" class="input" name="email" v-model="user.email">
-        </div>
-
-        <div class="container-input">
-          <label for="telefone">Telefone</label>
-          <input type="text" class="input" name="telefone" v-model="user.phone">
-        </div>
-
-        <div v-if="dev == 'true'">
+        <div class="inputs">
           <div class="container-input">
-            <label for="data de nascimento">Nascimento</label>
-            <input type="date" class="input" name="data de nascimento" v-model="user.dtNasc">
+            <label for="nome">Nome</label>
+            <input type="text" class="input" name="nome" v-model="user.nome">
+          </div>
+
+          <div class="container-input">
+            <label for="email">Email</label>
+            <input type="text" class="input" name="email" v-model="user.email">
+          </div>
+
+          <div class="container-input">
+            <label for="telefone">Telefone</label>
+            <input type="text" class="input" name="telefone" v-model="user.phone">
+          </div>
+
+          <div v-if="dev == 'true'">
+            <div class="container-input">
+              <label for="data de nascimento">Nascimento</label>
+              <input type="date" class="input" name="data de nascimento" v-model="user.dtNasc">
+            </div>
+          </div>
+          <div v-else>
+            <div class="container-input">
+              <label for="cnpj">CNPJ</label>
+              <input type="text" class="input" name="cnpj" v-model="user.cnpj">
+            </div>
+          </div>
+          <div class="msg-container">
+          <transition>
+            <p v-show="msg2.error" class="msg msg-2">{{ msg2.mensagem }}</p>
+          </transition>
+        </div>
+          <button type="button" class="btn" @click="updateUser">Atualizar dados</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="header sub-header">
+          <h2>Endereço</h2>
+        </div>
+        
+        <div>
+          <div class="msg-container">
+            <transition>
+              <p v-show="msg.error" class="msg">{{ msg.mensagem }}</p>
+            </transition>
+          </div>
+          <div class="container-input">
+            <label for="cep">CEP: </label>
+            <input type="text" class="input input-cep" name="cep" v-model="cep" placeholder="Digite seu CEP"/>
+            <button class="btn btn-cep" @click="updateEndereco">Enviar</button>
+          </div>
+          <div v-if="localCadastrado" class="local">
+            <p v-show="dev == 'false'">Logradouro: {{endereco.logradouro}}</p>
+            <p v-show="dev == 'false'">Complemento: {{endereco.complemento}}</p>
+            <p v-show="dev == 'false'">Bairro: {{endereco.bairro}}</p>
+            <p>Cidade: {{endereco.cidade}}</p>
+            <p>Estado: {{endereco.estado}}</p>
+          </div>
+          <div v-else class="local">
+            <p>Você ainda não registrou seu endereço</p>
+            <p>Para faze-lo insira seu CEP e click em enviar</p>
           </div>
         </div>
-        <div v-else>
-          <div class="container-input">
-            <label for="cnpj">CNPJ</label>
-            <input type="text" class="input" name="cnpj" v-model="user.cnpj">
-          </div>
-        </div>
-        <div class="msg-container">
-        <transition>
-          <p v-show="msg2.error" class="msg">{{ msg2.mensagem }}</p>
-        </transition>
       </div>
-        <button type="button" class="btn" @click="updateUser">Atualizar dados</button>
-      </div>
-    </section>
-
-    <section class="field">
-      <h1> Endereço </h1>
-      
-      <div class="msg-container">
-        <transition>
-          <p v-show="msg.error" class="msg">{{ msg.mensagem }}</p>
-        </transition>
-      </div>
-
-      <div>
-        <label for="cep">CEP: </label>
-        <input type="text" name="cep" v-model="cep" placeholder="Digite seu CEP"/>
-        <button @click="updateEndereco">Enviar</button>
-      </div>
-      <div v-if="localCadastrado">
-        <p v-show="dev == 'false'">Logradouro: {{endereco.logradouro}}</p>
-        <p v-show="dev == 'false'">Complemento: {{endereco.complemento}}</p>
-        <p v-show="dev == 'false'">Bairro: {{endereco.bairro}}</p>
-        <p>Cidade: {{endereco.cidade}}</p>
-        <p>Estado: {{endereco.estado}}</p>
-      </div>
-      <div v-else>
-        <p>Você ainda não registrou seu endereço</p>
-        <p>Para faze-lo insira seu CEP e click em enviar</p>
-      </div>
-    </section>
-    
+    </div>
   </div>
 </template>
 
@@ -160,7 +167,7 @@ export default {
 
       setTimeout(() => {
         (this.msg.error = false), (this.msg.mensagem = "");
-      }, 2500);
+      }, 2800);
     },
 
     updateUser() {
@@ -231,19 +238,44 @@ export default {
 </script>
 
 <style scoped>
+.view {
+  height: 96vh;
+}
 .container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 10px;
-  background-color: #3e3f42;
   color: #303133;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 
 .field {
-  background-color: #DFE2ED;
-  padding: 10px;
-  margin: 0 10px;
-  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  margin-right: 15px;
+  margin-bottom: 15px;
+  width: 50%;
+}
+
+.btn:hover{
+  background-color: #4a4b4f;
+  color: #9af995;
+}
+
+/*** INPUTS ***/
+.container-input {
+  display: flex;
+}
+
+.container-input label{
+  margin-top: 13px;
+  margin-right: 5px;
+}
+
+/** IMAGEM DE PERFIL ***/
+.container-img {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 img {
@@ -251,14 +283,53 @@ img {
   height: 100px;
 }
 
-.container-input {
-  display: flex;
+/*** ENDEREÇO ***/
+.input-cep {
+  margin-right: 10px;
 }
 
+.btn-cep {
+  height: 38px;
+  margin-top: 5px;
+}
+
+.local {
+  margin-top: 10px;
+}
+
+.local p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  color: #4a4b4f;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+/*** ***/
 .msg {
-  top: -30px;
+  top: 50px;
 }
 
+.msg-2 {
+  top: -12px;
+}
+
+/*** MEDIA QUERIES ***/
+@media screen and (max-width: 800px) {
+  .view {
+    height: auto;
+  }
+
+  .container {
+    display: block;
+    gap: 300px;
+    padding-right: 15px;
+  }
+
+  .field {    
+    width: 100%;
+  }
+}
 </style>
 
 

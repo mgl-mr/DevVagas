@@ -1,60 +1,66 @@
 <template>
-  <div class="vagas">
-    <div v-if="completo != '1'" class="box-error">
+  <div class="view">
+    <div v-if="completo != '1'" class="warning">
+      <div class="header">
+        <h2>AVISO</h2>
+      </div>
       <div>
         <p>Você ainda não completou seu perfil</p>
         <p>Vá em "perfil" e cadastre seu endereço</p>
       </div>
-      <router-link to="/perfil">Vá para perfil</router-link>
     </div>
     <div v-else>
       <div>
+        <div class="header">
         <h2>Criar vaga</h2>
-        <EmpData :chave="chave" />
+        </div>
+        <div class="container">
+          <EmpData :chave="chave" />
 
-        <div class="cad-container">
-          <div class="container-input">
-            <label for="area">Ecolha a área de atuação</label>
-            <select name="area" id="area" v-model="vaga.area" class="input">
-              <option value="" disabled>Selecione a área</option>
-              <option value="Desenvolvedor Front-End">Desenvolvedor Front-End</option>
-              <option value="Desenvolvedor Back-End">Desenvolvedor Back-End</option>
-              <option value="Desenvolvedor Full-stack">Desenvolvedor Full-stack</option>
-              <option value="Desenvolvedor mobile">Desenvolvedor mobile</option>
-              <option value="Cientista de dados">Cientista de dados</option>
-              <option value="Técnico de segurança">Técnico de segurança</option>
-            </select>
-          </div>
+          <div class="field">
+            <div class="container-input">
+              <label for="area">Ecolha a área de atuação</label>
+              <select name="area" id="area" v-model="vaga.area" class="input">
+                <option value="" disabled>Selecione a área</option>
+                <option value="Desenvolvedor Front-End">Desenvolvedor Front-End</option>
+                <option value="Desenvolvedor Back-End">Desenvolvedor Back-End</option>
+                <option value="Desenvolvedor Full-stack">Desenvolvedor Full-stack</option>
+                <option value="Desenvolvedor mobile">Desenvolvedor mobile</option>
+                <option value="Cientista de dados">Cientista de dados</option>
+                <option value="Técnico de segurança">Técnico de segurança</option>
+              </select>
+            </div>
 
-          <div class="container-input">
-            <label for="vaga">Ecolha o tipo da vaga</label>
-            <input type="radio" id="efetivado" name="vaga" value="efetivado" v-model="vaga.vaga">
-            <label for="efetivado">Efetivado</label>
-            <input type="radio" id="freelance" name="vaga" value="freelance" v-model="vaga.vaga">
-            <label for="freelance">Freelance</label>
-          </div>
+            <div class="container-input">
+              <label for="vaga">Ecolha o tipo da vaga</label>
+              <input type="radio" id="efetivado" name="vaga" value="efetivado" v-model="vaga.vaga">
+              <label for="efetivado">Efetivado</label>
+              <input type="radio" id="freelance" name="vaga" value="freelance" v-model="vaga.vaga">
+              <label for="freelance">Freelance</label>
+            </div>
 
-          <div class="container-input">
-            <label for="descrição">Descrição da vaga</label>
-            <textarea class="input" name="descrição"  v-model="vaga.descricao" placeholder="De algumas informações da vaga"></textarea>
-          </div>
+            <div class="container-input">
+              <label for="descrição">Descrição da vaga</label>
+              <textarea class="input" name="descrição"  v-model="vaga.descricao" placeholder="De algumas informações da vaga"></textarea>
+            </div>
 
-          <div class="container-input">
-            <label for="requisitos">Requisitos da vaga</label>
-            <textarea class="input" name="requisitos"  v-model="vaga.requisitos" placeholder="Liste os requisitos da vaga"></textarea>
-          </div>
+            <div class="container-input">
+              <label for="requisitos">Requisitos da vaga</label>
+              <textarea class="input" name="requisitos"  v-model="vaga.requisitos" placeholder="Liste os requisitos da vaga"></textarea>
+            </div>
 
-          <div class="container-input">
-            <label for="salario">Salario</label>
-            <input type="text" class="input" name="salario" v-model="vaga.salario" placeholder="Informe o salário">
-          </div>
+            <div class="container-input">
+              <label for="salario">Salario</label>
+              <input type="text" class="input" name="salario" v-model="vaga.salario" placeholder="Informe o salário">
+            </div>
 
-          <div class="msg-container">
-            <transition>
-              <p v-show="msg.error" class="msg">{{ msg.mensagem }}</p>
-            </transition>
+            <div class="msg-container">
+              <transition>
+                <p v-show="msg.error" class="msg">{{ msg.mensagem }}</p>
+              </transition>
+            </div>
+            <button type="button" class="btn" @click="inserirVaga">Inserir vaga</button>
           </div>
-          <button type="button" class="btn" @click="inserirVaga">Inserir vaga</button>
         </div>
       </div>
       <ListaVagas :id="id"/>
@@ -153,16 +159,32 @@ export default {
 </script>
 
 <style scoped>
-.vagas {
-  width: 100%;
-  background-color: #DFE2ED;
-  padding: 10px;
-  margin: 0 auto;
+.view {
+  height: auto;
 }
 
-a {
-  text-decoration: none;
-  text-align: center;
+.container {
+  color: #303133;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.field {
+  width: 50%;
+  margin-right: 15px;
+}
+
+/*** MEDIA QUERRIES ***/
+@media screen and (max-width: 800px) {
+  .container {
+    display: block; 
+    padding-right: 15px;
+  }
+
+  .field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
 }
 
 </style>

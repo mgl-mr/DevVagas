@@ -19,16 +19,13 @@
       </router-link>
       <router-link to="/envios" v-show="dev == 'true'">
         <i class="fa-solid fa-share-from-square"></i>
-        <span>Meus Envios</span>
+        <span>Envios</span>
       </router-link>
       <router-link to="/vagas" v-show="dev == 'false'">
         <i class="fa-solid fa-clipboard"></i>
         <span>Vagas</span>
       </router-link>
-      <router-link to="/recebidos" v-show="dev == 'false'">
-        <i class="fa-solid fa-envelopes-bulk"></i>
-        <span>Recebidos</span>
-      </router-link>
+  
       
       <router-link to="/" @click="$emit('sair')">
         <i class="fa-solid fa-door-open"></i>
@@ -68,10 +65,12 @@
 
 .sidebar {
   position: fixed;
-  width: 25%;
-  height: auto;
+  width: 23%;
+  height: 100vh;
   background-color: #4A4B4F;
   transition: all .5s ease;
+  left: 0;
+  top: 0; 
 }
 
 .sidebar a {

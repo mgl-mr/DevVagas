@@ -106,10 +106,80 @@ body {
 
 .principal {
   display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .container {
   display: flex;
+}
+
+.field {
+  background-color: #9af995;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  transition: all .5s ease;
+}
+
+.field:hover {
+  transform: scale(1.01);
+}
+
+/** VIEWS ***/
+.view {
+  width: 75%;
+  background-color: #dfe2ed;
+  border-radius: 15px;
+  margin: 10px;
+}
+
+/*** HEADER ***/
+.header{
+  border-bottom: 1px solid #111;
+  height: auto;
+  padding: 10px 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #3e3f42;
+  font-size: 30px;
+  text-shadow: 4px 3px 0px #9af995, 9px 8px 0px rgba(0,0,0,0.15);
+  letter-spacing: 2px;
+}
+
+.header h2 {
+  margin-left: 15px;
+}
+
+.sub-header {
+  font-size: 24px;
+  text-shadow: 4px 3px 0px #dfe2ed, 9px 8px 0px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+/*** AVISO ***/
+.warning {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #dfe2ed;
+  border-radius: 15px;
+  width: 100%;
+  height: 96vh;
+}
+
+.warning .header {
+  margin-bottom: 30px;
+}
+
+.warning p{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  color: #4a4b4f;
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 /*** CADS ***/
@@ -180,8 +250,8 @@ body {
 }
 
 .btn:hover {
-  background-color: #9af995;
-  border: 2px solid #dfe2ed;
+  background-color: #4a4b4f;
+  color: #9af995;
   cursor: pointer;
 }
 
@@ -210,26 +280,45 @@ body {
 }
 
 .msg-styck {
-  position: sticky;
-  top: 50px;
-  left: 50%;
-}
-
-.msg-container-styck {
   position: fixed;
-  top: 50px;
-  left: 50%;
+  border: 1px solid #4a4b4f;
+  border-radius: 15px;
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 2px;
+  background-color:#dfe2ed;
+  padding-top: 15px;
+  width: 400px;
+  height: 50px;
+  margin: 0 auto;
 }
 
 .v-enter-active {
-  transition: transform 2s cubic-bezier(0, 1, 1, 0);
+  transition: transform 1s ease;
 }
 
 .v-enter-from {
-  transform: translateX(10vw);
+  transform: translateX(100vw);
 }
 
 .v-enter-to {
-  transform: translateX(-10vw);
+  transform: translateX(0vw);
+}
+
+/*** MEDIA QUERIES ***/
+@media screen and (max-width: 800px) {
+  .view {
+    width: 100%;
+    background-color: #dfe2ed;
+    border-radius: 15px;
+    margin: 10px;
+    margin-left: 80px;
+  }
+
+  .msg-styck {
+    letter-spacing: 0px;
+    width: 300px;
+    font-size: 14px;
+  }
 }
 </style>
