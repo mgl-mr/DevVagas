@@ -67,8 +67,9 @@
 <style scoped>
 
 .sidebar {
+  position: fixed;
   width: 25%;
-  height: 100vh;
+  height: auto;
   background-color: #4A4B4F;
   transition: all .5s ease;
 }
