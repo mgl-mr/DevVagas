@@ -8,7 +8,7 @@
 
     <div class="curriculos" v-if="show">
       <div class="header sub-header">
-        <h1>Curriculos</h1>
+        <h2>Curriculos</h2>
         <button type="button" class="bt" @click="fechaCurriculo">
           <i class="fa-solid fa-x"></i>
         </button>
@@ -16,18 +16,44 @@
       <div v-if="render.error == false">
         <p class="empty">{{render.mensagem}}</p>
       </div>
-      <div v-else class="lista-vaga">
-        <div v-for="curriculo in curriculos" :key="curriculo.id" class="row-vaga">
-          <p>Nome: {{curriculo.nome}}</p>
-          <p>Email: {{curriculo.email}}</p>
-          <p>Telefone: {{curriculo.phone}}</p>
-          <p>Github: {{curriculo.github}}</p>
-          <p>Data de nascimento: {{curriculo.data_nasc}}</p>
-          <p>Cidade: {{curriculo.cidade}}</p>
-          <p>Estado: {{curriculo.estado}}</p>
-          <p>Idiomas: {{curriculo.idiomas}}</p>
-          <p>Formação: {{curriculo.formacao}}</p>
-          <p>Experiência: {{curriculo.experiencia}}</p>
+      <div v-else class="container">
+        <div v-for="curriculo in curriculos" :key="curriculo.id" class="field">
+          <div class="header sub-header">
+            <h2>{{curriculo.nome}}</h2>
+          </div>
+
+          <h3>Contato</h3>
+          <div class="flex">
+            <p>Email: {{curriculo.email}}</p>
+            <p>Telefone: {{curriculo.phone}}</p>
+          </div>
+
+          <h3>GitHub</h3>
+          <div class="flex">           
+            <p>GitHub: {{curriculo.github}}</p>
+            <p>Data de nascimento: {{curriculo.data_nasc}}</p>
+          </div>
+
+          <h3>Endereço</h3>
+          <div class="flex">   
+            <p>Cidade: {{curriculo.cidade}}</p>
+            <p>Estado: {{curriculo.estado}}</p>
+          </div>
+
+          <h3>Idiomas</h3>
+          <div class="center">            
+            <p>{{curriculo.idiomas}}</p>
+          </div>
+
+          <h3>Formação</h3>
+          <div class="center">     
+            <p>{{curriculo.formacao}}</p>
+          </div>
+
+          <h3>Experiência</h3>
+          <div class="center">           
+            <p>{{curriculo.experiencia}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -253,9 +279,47 @@ export default {
   top: 50px;
 }
 
-/*** LITAS FIXA CURRICULOS */
+/*** LISTA CURRICULOS */
 .curriculos {
+  
+}
 
+.curriculos .field{
+  width: 100%;
+}
+
+.curriculos .field .flex{
+  display: flex;
+  justify-content: space-around;
+}
+
+.curriculos .field .center{
+  text-align: center;
+}
+
+.curriculos .header h2 {
+  font-size: 38px;
+}
+
+.curriculos .field h3{
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-bottom: 3px solid #303133;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.curriculos .field h2 {
+  font-size: 24px;
+  text-align: left;
+  margin-left: 0;
+}
+
+.curriculos .field p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  color: #303133;
+  font-size: 18px;  
 }
 
 .curriculos .header {
@@ -265,7 +329,7 @@ export default {
 .curriculos .bt {
   position: absolute;
   left: 10px;
-  top: 24px;
+  top: 20px;
   border: none;
   background-color: transparent;
   font-size: 28px;
@@ -300,6 +364,14 @@ export default {
 
   .header h2 {
     font-size: 24px;
+  }
+
+  .curriculos .field .flex{
+    display: block;
+  }
+
+  .curriculos .field .center{
+    text-align: left;
   }
 
 }

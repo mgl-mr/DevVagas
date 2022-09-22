@@ -122,10 +122,6 @@ body {
   transition: all .5s ease;
 }
 
-.field:hover {
-  transform: scale(1.01);
-}
-
 /** VIEWS ***/
 .view {
   width: 75%;
