@@ -280,10 +280,6 @@ export default {
 }
 
 /*** LISTA CURRICULOS */
-.curriculos {
-  
-}
-
 .curriculos .field{
   width: 100%;
 }
