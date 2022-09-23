@@ -268,7 +268,7 @@ export default {
   margin-left: 2px;
 }
 
-.view > p {
+.view  p {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   height: 50px;

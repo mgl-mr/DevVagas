@@ -138,32 +138,32 @@ if($action == "updateEndereco") {
   $id = $_POST['id'];
   $estado = $_POST['estado'];
   $cidade = $_POST['cidade'];
-
+  
   if($dev == "true") {
-    $array = array($cidade, $estado, $id);
-
+    $array = array($cidade, $estado, $id); 
+    
     if($localCadastrado == "false") {
       $query = "INSERT INTO endereco_dev(cidade, estado, id_dev) VALUES(?, ?, ?)";
     } else {
       $query = "UPDATE endereco_dev SET cidade=?, estado =?  WHERE id_dev=?";
     }
-  } else {
+  } else { 
     $bairro = $_POST['bairro'];
     $complemento = $_POST['complemento'];
     $logradouro= $_POST['logradouro']; 
 
     $array = array($logradouro, $complemento, $bairro, $cidade, $estado, $id);
 
-    if($localCadastrado == "false") {
+    if($localCadastrado == "false") { 
       $query = "INSERT INTO endereco_empresa(logradouro, complemento, bairro, cidade, estado, id_empresa) VALUES(?, ?, ?, ?, ?, ?)";
-    } else {
-      $query = "UPDATE endereco_empresa SET logradouro=?, complemento=?, bairro=?, cidade=?, estado=?, id_empresa  WHERE id_empresa=?";
+    } else { 
+      $query = "UPDATE endereco_empresa SET logradouro=?, complemento=?, bairro=?, cidade=?, estado=? WHERE id_empresa=?";
     }
   }
 
   $resp = insUpDel($query,$array);
-
-  if($resp) {
+  
+  if($resp) { 
     $result['message'] = "Endereço atualizado";
     if(substr($query, 0, 28) == "INSERT INTO endereco_empresa") {
       $array = array($id);

@@ -153,7 +153,7 @@ export default {
         method: "post",
         })
         .then((resp) => resp.json())
-        .then((data) => {
+        .then((data) => { console.log(data);
           this.msg.error = true;
           this.msg.mensagem = data.message;
           this.carregaEndereco();
