@@ -477,4 +477,32 @@ if($action == "buscaCurriculos"){
   }
 }
 
+if($action == "updateImage"){
+  $id = $_POST['id'];
+  $chave = $_POST['chave'];
+  $dev = $_POST['dev'];
+  $nomeAntigo = $_POST['nomeAntigo'];
+  $arquivo_temporario = $_FILES['imagem']['tmp_name'];
+
+  $nomeImagem = $chave.".jpg";
+
+  if($nomeAntigo == "userNoImage.png"){
+    $array = array($nomeImagem, $id);
+    if($dev == "true") {
+      $query = "UPDATE devs SET foto=? WHERE id = ?";
+    } else {
+      $query = "UPDATE empresas SET foto=? WHERE id = ?";
+    }
+    insUpDel($query,$array);
+  }
+  
+  if(move_uploaded_file($arquivo_temporario, "imagens/$nomeImagem")) {
+    $result['message'] = "Imagem alterada";
+  } else {
+    $result['error'] = true;
+    $result['message'] = "Falha ao atualizar";
+  }
+  
+}
+
 echo(json_encode($result)); 

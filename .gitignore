@@ -3,7 +3,7 @@ node_modules
 /dist
 
 # imagens
-/public/img/perfil
+/backEnd/imagens
 
 # local env files
 .env.local

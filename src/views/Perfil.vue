@@ -6,7 +6,14 @@
     <div class="container">
       <div class="field">
         <div class="container-img">
-          <img :src="local" alt="logo Dev Vagas" id="logo" />
+          <label for="imagem">
+            <img :src="local" alt="Imagem de perfil" id="fotoPerfil" />
+            <i class="fa-solid fa-camera camera"></i>
+          </label>
+          <input type="file" name="imagem" id="imagem" @change="updateFoto">
+           <transition>
+            <p v-show="msg3.error" class="msg">{{ msg3.mensagem }}</p>
+          </transition>
         </div>
         <div class="inputs">
           <div class="container-input">
@@ -89,6 +96,7 @@ export default {
       endereco: null,
       msg: {error: false, mensagem: ""},
       msg2: {error: false, mensagem: ""},
+      msg3: {error: false, mensagem: ""},
       user: { 
         id: "",
         nome: "",
@@ -99,8 +107,8 @@ export default {
         foto: "",
         chave: ""
       },
-      local: "/img/perfil/dev/userNoImage.png",
-      /**** ../../backEnd/ ****/
+      selectedFile: null,
+      local: null,
     };
   },
 
@@ -124,6 +132,7 @@ export default {
         this.user.cnpj = data.user.cnpj 
         this.user.foto = data.user.foto
         this.user.chave = data.user.chave
+        this.local = "http://localhost/vue-php-project/backEnd/imagens/"+data.user.foto
       })
     },
 
@@ -153,7 +162,7 @@ export default {
         method: "post",
         })
         .then((resp) => resp.json())
-        .then((data) => { console.log(data);
+        .then((data) => { 
           this.msg.error = true;
           this.msg.mensagem = data.message;
           this.carregaEndereco();
@@ -198,6 +207,43 @@ export default {
       setTimeout(() => {
         (this.msg2.error = false), (this.msg2.mensagem = "");
       }, 2000);
+    },
+
+    updateFoto(event) {
+      var extensoesPermitidas = /(.jpg|.jpeg|.png)$/i;
+      this.selectedFile = event.target.files[0];
+      
+      if(!extensoesPermitidas.exec(this.selectedFile.name)){
+        this.msg3.error = true;
+        this.msg3.mensagem = "Somente arquivos .jpeg ou .png"
+      } else {
+        let formData = new FormData();
+        formData.append("dev", this.dev);
+        formData.append("chave", this.chave);
+        formData.append("id", this.user.id);
+        formData.append("nomeAntigo", this.user.foto);
+        formData.append("imagem", this.selectedFile);
+        
+        fetch("https://localhost/vue-php-project/backEnd/crontoler.php?action=updateImage", {
+        body: formData,
+        method: "post",
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+          this.msg3.error = true;
+          this.msg3.mensagem = data.message;
+          if(data.error == false) {
+            this.local = "";
+            this.local = "http://localhost/vue-php-project/backEnd/imagens/userNoImage.png";
+          }
+        });
+       
+      }
+
+      setTimeout(() => {
+        (this.msg3.error = false), (this.msg3.mensagem = "");
+      }, 2000);
+      
     },
 
     carregaEndereco() {
@@ -275,13 +321,40 @@ export default {
 .container-img {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: center;  
 }
 
-img {
+.container-img #fotoPerfil {
   width: 100px;
   height: 100px;
+  border-radius: 50%;
 }
+
+.container-img #imagem {
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.container-img label {
+  position: relative;
+  font-size: 20px;
+  transition: all .5s ease;
+}
+
+.container-img .camera {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.container-img #fotoPerfil:hover,
+.container-img label:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+
 
 /*** ENDEREÇO ***/
 .input-cep {
