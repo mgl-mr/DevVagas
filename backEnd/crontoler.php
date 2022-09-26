@@ -2,6 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 
 include("model.php");
+include("email/envia_email.php");
 
 $result = array('error'=>false);
 $action = "";
@@ -25,6 +26,15 @@ if($action == "inserirDev") {
 
   if($resp) {
     $result['message'] = "Cadastrado com sucesso";
+
+    $hash=md5($email);
+    $link="<a href='https://localhost/vue-php-project/backEnd/crontoler.php?dev=".$hash."'> Clique aqui para confirmar seu cadastro </a>";
+    $mensagem="<tr><td style='padding: 10px 0 10px 0;' align='center' bgcolor='#669999'>";
+
+    $mensagem.="Email de Confirmação <br>".$link."</td></tr>";
+    $assunto="Confirme seu cadastro";
+
+    enviaEmail($email, $mensagem, $assunto);
   } else {
     $result['error'] = true;
     $result['message'] = "Falha ao cadastrar";
@@ -46,6 +56,15 @@ if($action == "inserirEmp") {
 
   if($resp) {
     $result['message'] = "Cadastrado com sucesso";
+
+    $hash=md5($email);
+    $link="<a href='https://localhost/vue-php-project/backEnd/crontoler.php?emp=".$hash."'> Clique aqui para confirmar seu cadastro </a>";
+    $mensagem="<tr><td style='padding: 10px 0 10px 0;' align='center' bgcolor='#669999'>";
+
+    $mensagem.="Email de Confirmação <br>".$link."</td></tr>";
+    $assunto="Confirme seu cadastro";
+
+    enviaEmail($email, $mensagem, $assunto);    
   } else {
     $result['error'] = true;
     $result['message'] = "Falha ao cadastrar";
@@ -62,26 +81,36 @@ if($action == "logar") {
   $resp = ConsultaSelect($query, $array);
 
   if($resp) {
-    if(password_verify($senha,$resp['senha'])){
-      $result['message'] = "Bem vindo ".$resp['nome'];
-      $result['dev'] = true;
-      $result['chave'] = $resp['chave'];
+    if($resp['status']) {
+      if(password_verify($senha,$resp['senha'])){
+        $result['message'] = "Bem vindo ".$resp['nome'];
+        $result['dev'] = true;
+        $result['chave'] = $resp['chave'];
+      } else {
+        $result['error'] = true;
+        $result['message'] = "Senha incorreta";
+      }
     } else {
       $result['error'] = true;
-      $result['message'] = "Senha incorreta";
+      $result['message'] = "Você ainda não verificou seu email";
     }
   } else {
     $query = "SELECT * FROM empresas WHERE email = ?";
     $resp = ConsultaSelect($query, $array);
 
     if($resp) {
-      if(password_verify($senha,$resp['senha'])){
-        $result['message'] = "Bem vindo ".$resp['nome'];
-        $result['dev'] = false;
-        $result['chave'] = $resp['chave'];
+      if($resp['status']) {
+        if(password_verify($senha,$resp['senha'])){
+          $result['message'] = "Bem vindo ".$resp['nome'];
+          $result['dev'] = false;
+          $result['chave'] = $resp['chave'];
+        } else {
+          $result['error'] = true;
+          $result['message'] = "Senha incorreta";
+        }
       } else {
         $result['error'] = true;
-        $result['message'] = "Senha incorreta";
+        $result['message'] = "Você ainda não verificou seu email";
       }
     } else {
       $result['error'] = true;
@@ -501,8 +530,37 @@ if($action == "updateImage"){
   } else {
     $result['error'] = true;
     $result['message'] = "Falha ao atualizar";
+  } 
+}
+
+if(isset($_GET['dev'])){
+  $h=$_GET['dev'];
+
+  $array = array($h);
+  $query = "SELECT * FROM devs WHERE md5(email)=?";
+  $resp=ConsultaSelect($query, $array);
+
+  if($resp){
+      $array=array($resp['id']);
+      $query = "UPDATE devs SET status = true WHERE id=?";
+      insUpDel($query, $array);
+      header('location:http://localhost:8080');
   }
-  
+}
+
+if(isset($_GET['emp'])){
+  $h=$_GET['emp'];
+
+  $array = array($h);
+  $query = "SELECT * FROM empresas WHERE md5(email)=?";
+  $resp=ConsultaSelect($query, $array);
+
+  if($resp){
+      $array=array($resp['id']);
+      $query = "UPDATE empresas SET status = true WHERE id=?";
+      insUpDel($query, $array);
+      header('location:http://localhost:8080');
+  }
 }
 
 echo(json_encode($result)); 
